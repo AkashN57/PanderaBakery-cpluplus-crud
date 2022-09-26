@@ -1,0 +1,244 @@
+#include <iostream>
+#include <cstdlib>
+#include <fstream>
+
+using namespace std;
+//////////////functions///////////////
+void AddData();
+void ListData();
+void SearchData();
+void HelpData();
+void DeleteData();
+void SaveToFile();
+void Updatedata();
+
+struct Product_data
+{
+string PId;
+string PName;
+string Unit_price;
+string qty;
+};
+
+Product_data thisproduct[5];
+
+int main()
+{
+    //////creating username and Password////
+   string newname,newpass;
+   string loginname,loginpass;
+   cout<<"Type New Username : "<<endl;
+   cin>>newname;
+   cout<<"Type New Password : "<<endl;
+   cin>>newpass;
+   ///////login in ////////////
+   cout<<"Type Username : "<<endl;
+   cin>>loginname;
+   cout<<"Type Password : "<<endl;
+   cin>>loginpass;
+   
+    int option;
+   
+    if(newname==loginname and newpass==loginpass){
+          cout<<"\t\t\t       WELCOME "<<loginname<<endl;
+      cout<<"=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+="<<endl;
+       
+            do{
+          cout<<"\t\t\t       PANDERA BAKERY        "<<endl;
+          cout<<"=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+="<<endl;
+          cout << "\n";
+          cout<<"\t\t\t Address : No.6,Marine Drive "<<endl;
+          cout<<"\t\t\t Telephone No : 011XXXXXX1   "<<endl;
+          cout<<"\t\t\t Email : pandera@gmail.com   "<<endl;
+          cout<<"=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=++=+=+=+=+=+=+=+=+=+=+=+=++=+=+=+="<<endl;
+     
+         cout<<"1-CREATE RECORD"<<endl;
+         cout<<"2-LIST RECORD"<<endl;
+         cout<<"3-SEARCH RECORD"<<endl;
+         cout<<"4-DELETE RECORD"<<endl;
+         cout<<"5-UPDATE RECORD"<<endl;
+         cout<<"6-HELP"<<endl;
+         cout<<"7-EXIT"<<endl;
+         cout<<"**********************************************************************"<<endl;
+     //////////////////////////////////
+             
+         cout<<"Select Option :";
+         cin>>option;
+         
+    switch(option){
+     /////////ADD/////////
+    case 1:AddData();
+    //system("CLS")
+     break;
+     /////////LIST/////////
+    case 2:ListData();
+    //system("CLS")
+    break;
+    /////////SEARCH/////////
+    case 3:SearchData();
+     //system("CLS")
+    break;
+    /////////DELETE/////////
+    case 4:DeleteData();
+     //system("CLS")
+    break;
+    /////////UPDATE/////////
+     case 6:Updatedata();
+     //system("CLS")
+     break;
+     /////////HELP/////////
+     case 7:HelpData();
+     //system("CLS")
+     break;
+     
+    /////calling exit function///
+    //case 6:exit(0);
+    //break;
+    };
+   
+      }while(option!=7);
+    SaveToFile();
+    cout<<"Saving the files"<<endl;
+       
+       
+       
+    }else{
+        cout<<"Wrong Username or Password"<<endl;
+    }
+    //system("cls");
+   
+     ///bakery////
+ 
+
+    return 0;
+}
+
+void AddData()
+{
+for (int i = 0; i < 3; i++)
+{
+cout << "Enter Product ID :    ";
+cin >> thisproduct[i].PId;
+cout << "Enter Product Name :   ";
+cin >> thisproduct[i].PName;
+cout << "Enter Unit Price :     ";
+cin >> thisproduct[i].Unit_price;
+cout << "Enter Availble Quantity :   ";
+cin >> thisproduct[i].qty;
+//system("cls");
+}
+
+}
+
+
+
+/////////////////////////////list data ///////////////////
+void ListData()
+{
+        cout<<"|   ID   |    NAME    |   PRICE  |   QUANTIIY  |"<<endl<<"------------------------------\n";
+for (int i = 0; i < 3; i++)
+{
+cout <<"   "<<thisproduct[i].PId<<"        "<<thisproduct[i].PName<<"          "<<thisproduct[i].Unit_price<< "          "<< thisproduct[i].qty<<endl;
+
+
+//system("pause");
+}
+}
+////////////////////search data////////////////
+void SearchData()
+{
+string empid;
+
+cout << "Enter ID" << endl;
+cin >> empid;
+cout << "\n";
+bool Eidfound = false;
+
+    for (int i = 0; i < 3; i++){
+            if (empid== thisproduct[i].PId)
+{
+ Eidfound = true;
+
+   cout << "ID :  " <<thisproduct[i].PId<<"   "<<endl;
+   cout << "Name :  " <<thisproduct[i].PName<<"    "<<endl;
+   cout << "Price :  " <<thisproduct[i].Unit_price<<"    "<<endl;
+   cout << "Quantity :  " <<thisproduct[i].qty<<"    "<<endl;
+   cout << "\n";
+   break;
+}
+
+}//end for
+
+  if (Eidfound == false){
+ cout << "Invalid ID" << endl;
+  }
+};
+////////help function///////
+void HelpData(){
+   cout << "click option one to add product data  "<<endl;
+   cout << "click option two to see all the product data  "<<endl;
+   cout << "click option three to search specific product data   "<<endl;
+   cout << "click option four to delete specific product data   "<<endl;
+   cout << "click option six to save and exit the terminal   "<<endl;
+   cout << "\n";
+   
+};
+///////////////////delete function//////////////
+void DeleteData(){
+    string empid;
+
+cout << "Enter ID" << endl;
+cin >> empid;
+   int counter =0;
+    for(int i=0;i < 3;i++){
+        if(empid== thisproduct[i].PId){
+            counter++;
+            thisproduct[i].PId = "";
+            thisproduct[i].PName = "";
+            thisproduct[i].Unit_price = "";
+            thisproduct[i].qty = "";
+            cout<<"Successfully deleted"<<endl;
+            break;
+        }
+    }
+    if(counter==0){
+        cout<<"ID number does not exist"<<endl;
+    }
+};
+///////////////////saving files and exiting//////////////
+void SaveToFile(){
+    ofstream write;
+    write.open("newfile.txt", ios::app);
+    for(int i=0;i<3;i++){
+       
+    write<<thisproduct[i].PId<<" , "<<thisproduct[i].PName<<"  ,  "<<thisproduct[i].Unit_price<<"   ,  " <<thisproduct[i].qty<<"  ,   "<<endl;
+    };
+    write.close();
+};
+///////////updating files///////////////////////////
+void Updatedata(){
+     string empid;
+    string name2,price2,quantity2;
+cout << "Enter ID" << endl;
+cin >> empid;
+   int counter2 =0;
+    for(int i=0;i < 3;i++){
+        if(empid== thisproduct[i].PId){
+            counter2++;
+            cout<<"Product Name : "<<endl;
+            cin>>name2;
+            thisproduct[i].PName = name2;
+            cout<<"Product Price : "<<endl;
+            cin>>price2;
+            thisproduct[i].Unit_price = price2;
+            cout<<"Product Price : "<<endl;
+            cin>>quantity2;
+            thisproduct[i].qty = quantity2;
+            cout<<"Successfully updated"<<endl;
+            break;
+        }
+    }
+    if(counter2==0){
+        cout<<"ID number does not exist"<<endl;
+    }
+}
